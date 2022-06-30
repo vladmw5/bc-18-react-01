@@ -8,6 +8,7 @@ const initialState = {
   number: "",
   email: "",
   city: "",
+  contract: false,
 };
 
 const cities = ["Kyiv", "Lviv", "Odesa"];
@@ -32,14 +33,36 @@ class TeacherForm extends Component {
     this.onFormReset();
   };
 
+  handleCheckbox = (ev) => {
+    this.setState(({ contract }) => {
+      return {
+        contract: !contract,
+      };
+    });
+  };
+
   render() {
-    console.log(Object.keys(this.state));
     return (
       <form onSubmit={this.handleSubmit}>
         {Object.keys(this.state).map((el, index, array) => {
-          return index !== array.length - 1 ? (
+          if (el === "contract") {
+            return (
+              <label key={el}>
+                {el}
+                <input
+                  type="checkbox"
+                  name={el}
+                  value={this.state[el]}
+                  checked={this.state[el]}
+                  onChange={this.handleCheckbox}
+                />
+              </label>
+            );
+          }
+          return index !== array.length - 2 ? (
             <label key={el}>
               <input
+                type="text"
                 placeholder={el}
                 name={el}
                 value={this.state[el]}
@@ -51,7 +74,8 @@ class TeacherForm extends Component {
               <select
                 name="city"
                 defaultValue={cities[1]}
-                onChange={this.handleChange}>
+                onChange={this.handleChange}
+              >
                 {cities.map((city) => (
                   <option key={city} value={city}>
                     {city}
@@ -61,7 +85,9 @@ class TeacherForm extends Component {
             </label>
           );
         })}
-        <button type="submit">Пригласить</button>
+        <button type="submit" disabled={!this.state.contract}>
+          Пригласить
+        </button>
       </form>
     );
   }

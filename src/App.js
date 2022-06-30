@@ -21,14 +21,14 @@ class App extends Component {
   render() {
     return (
       <>
-        {/* <Sidebar buttons={menu} user={user} />
-      <Section
-        title="Викладачі"
-        buttonTitle="Додати викладача"
-        buttonType="filled"
-      >
-        <div>таблиця</div>
-      </Section> */}
+        <Sidebar buttons={menu} user={user} />
+        <Section
+          title="Викладачі"
+          buttonTitle="Додати викладача"
+          buttonType="filled"
+        >
+          <div>таблиця</div>
+        </Section>
         <TeacherForm onSubmit={this.teacherFormSubmit} />
       </>
     );
