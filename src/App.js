@@ -13,6 +13,9 @@ class App extends Component {
 
   teacherFormSubmit = (teacher) => {
     console.log(teacher);
+    this.setState(({ teachers }) => ({
+      teachers: [...teachers, teacher],
+    }));
   };
 
   render() {
