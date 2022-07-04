@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import menu from "./components/Sidebar/menu.json";
 import user from "./components/UserTitle/user.json";
 import TeacherForm from "./components/TeacherForm/TeacherForm";
+import Main from "./components/Main/Main";
 import { Component } from "react";
 
 class App extends Component {
@@ -20,17 +21,10 @@ class App extends Component {
 
   render() {
     return (
-      <>
+      <div>
         <Sidebar buttons={menu} user={user} />
-        <Section
-          title="Викладачі"
-          buttonTitle="Додати викладача"
-          buttonType="filled"
-        >
-          <div>таблиця</div>
-        </Section>
-        <TeacherForm onSubmit={this.teacherFormSubmit} />
-      </>
+        <Main />
+      </div>
     );
   }
 }
