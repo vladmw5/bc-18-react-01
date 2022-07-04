@@ -21,6 +21,12 @@ class Main extends Component {
     this.toggleModal();
   };
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.teachers !== this.state.teachers) {
+      localStorage.setItem("teachers", JSON.stringify(this.state.teachers));
+    }
+  }
+
   render() {
     return (
       <main>
