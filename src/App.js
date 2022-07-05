@@ -6,6 +6,7 @@ import user from "./components/UserTitle/user.json";
 import TeacherForm from "./components/TeacherForm/TeacherForm";
 import Main from "./components/Main/Main";
 import { Component } from "react";
+import Pokemon from "./components/Pokemon/Pokemon";
 
 class App extends Component {
   state = {
@@ -22,8 +23,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Sidebar buttons={menu} user={user} />
-        <Main />
+        {/* <Sidebar buttons={menu} user={user} />
+        <Main /> */}
+        <Pokemon />
       </div>
     );
   }
