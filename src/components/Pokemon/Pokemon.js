@@ -18,6 +18,8 @@ class Pokemon extends Component {
       .then((res) => res.json())
       .then((res) => this.setState({ photo: res.sprites.front_default }));
   };
+    
+
 
   render() {
     console.log(this.state.photo);
