@@ -1,3 +1,5 @@
+import { Routes, Route } from "react-router-dom";
+import { StyledLink } from "./AppStyled";
 import Section from "./components/Section/Section";
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -7,7 +9,7 @@ import TeacherForm from "./components/TeacherForm/TeacherForm";
 import Main from "./components/Main/Main";
 import { Component } from "react";
 import Pokemon from "./components/Pokemon/Pokemon";
-
+import Home from "./components/Home ";
 class App extends Component {
   state = {
     teachers: [],
@@ -23,9 +25,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* <Sidebar buttons={menu} user={user} />
-        <Main /> */}
-        <Pokemon />
+        <nav>
+          <StyledLink to="/">Home</StyledLink>
+          <StyledLink to="pokemon">Pokemon</StyledLink>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="pokemon" element={<Pokemon />} />
+          <Route path="*" element={<h1>Page not found</h1>} />
+        </Routes>
       </div>
     );
   }
