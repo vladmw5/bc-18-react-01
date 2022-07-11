@@ -9,7 +9,7 @@ import TeacherForm from "./components/TeacherForm/TeacherForm";
 import Main from "./components/Main/Main";
 import { Component } from "react";
 import Pokemon from "./components/Pokemon/Pokemon";
-import Home from "./components/Home ";
+import Home from "./components/Home";
 class App extends Component {
   state = {
     teachers: [],
