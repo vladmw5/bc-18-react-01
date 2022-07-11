@@ -10,6 +10,7 @@ import Main from "./components/Main/Main";
 import { Component } from "react";
 import Pokemon from "./components/Pokemon/Pokemon";
 import Home from "./components/Home";
+
 class App extends Component {
   state = {
     teachers: [],
