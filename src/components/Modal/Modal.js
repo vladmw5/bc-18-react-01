@@ -1,30 +1,45 @@
+import { Link, useParams } from "react-router-dom";
 import { createPortal } from "react-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import s from "./Modal.module.css";
 
 const portalRef = document.querySelector("#modal-root");
 
-export default function Modal({ onClose, children }) {
+export default function Modal() {
+  const [photo, setPhoto] = useState("");
+  const params = useParams();
+  console.log(params);
+
   const onBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
-      onClose();
+      // onClose();
     }
   };
 
   useEffect(() => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${params.pokemonName}`)
+      .then((res) => res.json())
+      .then((res) => {
+        setPhoto(res.sprites.front_default);
+        // toggleModal();
+      });
+
     const onEscPressed = (event) => {
       if (event.code === "Escape") {
-        onClose();
+        // onClose();
       }
     };
     document.addEventListener("keydown", onEscPressed);
     return () => document.removeEventListener("keydown", onEscPressed);
-  }, [onClose]);
+  }, []);
 
   return createPortal(
     <div className={s.backdrop} onClick={onBackdropClick}>
-      <div className={s.modal}>{children}</div>
+      <div className={s.modal}>
+        <img src={photo} alt="alt" width="140" />
+        <Link to="/pokemon">Close</Link>
+      </div>
     </div>,
     portalRef
   );

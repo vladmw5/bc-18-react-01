@@ -10,6 +10,7 @@ import Main from "./components/Main/Main";
 import { Component } from "react";
 import Pokemon from "./components/Pokemon/Pokemon";
 import Home from "./components/Home";
+import Modal from "./components/Modal/Modal";
 
 class App extends Component {
   state = {
@@ -33,7 +34,10 @@ class App extends Component {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="pokemon" element={<Pokemon />} />
+          <Route path="pokemon" element={<Pokemon />}>
+            <Route path=":pokemonName" element={<Modal />} />
+          </Route>
+
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
       </div>

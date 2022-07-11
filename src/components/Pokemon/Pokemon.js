@@ -1,3 +1,4 @@
+import { Link, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Modal from "../Modal/Modal";
 
@@ -5,16 +6,6 @@ export default function Pokemon() {
   const [pokemons, setPokemons] = useState([]);
   const [photo, setPhoto] = useState("");
   const [showModal, setShowModal] = useState(false);
-
-  const handleClick = ({ currentTarget: { id } }) => {
-    console.log(id);
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setPhoto(res.sprites.front_default);
-        toggleModal();
-      });
-  };
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon")
@@ -33,17 +24,17 @@ export default function Pokemon() {
     <div>
       <ul>
         {pokemons.map(({ name }) => (
-          <li key={name} id={name} onClick={handleClick}>
-            <h2>{name}</h2>
+          <li key={name} id={name}>
+            <Link to={`/pokemon/${name}`}>
+              <h2>{name}</h2>
+            </Link>
+
             {/* <img src={this.state.photo} alt={name} width={40} /> */}
           </li>
         ))}
       </ul>
-      {showModal ? (
-        <Modal onClose={toggleModal}>
-          <img src={photo} alt="alt" width="140" />
-        </Modal>
-      ) : null}
+      <Outlet />
+      {showModal ? <Modal onClose={toggleModal}></Modal> : null}
     </div>
   );
 }
