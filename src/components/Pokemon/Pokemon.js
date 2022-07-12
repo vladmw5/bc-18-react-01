@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Modal from "../Modal/Modal";
 
@@ -6,6 +6,7 @@ export default function Pokemon() {
   const [pokemons, setPokemons] = useState([]);
   const [photo, setPhoto] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon")
@@ -25,7 +26,7 @@ export default function Pokemon() {
       <ul>
         {pokemons.map(({ name }) => (
           <li key={name} id={name}>
-            <Link to={`/pokemon/${name}`}>
+            <Link to={`/pokemon/${name}`} state={{ from: location.pathname }}>
               <h2>{name}</h2>
             </Link>
 
@@ -34,7 +35,7 @@ export default function Pokemon() {
         ))}
       </ul>
       <Outlet />
-      {showModal ? <Modal onClose={toggleModal}></Modal> : null}
+      {/* {showModal ? <Modal onClose={toggleModal}></Modal> : null} */}
     </div>
   );
 }

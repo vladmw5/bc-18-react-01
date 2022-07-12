@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 
@@ -9,11 +9,17 @@ const portalRef = document.querySelector("#modal-root");
 export default function Modal() {
   const [photo, setPhoto] = useState("");
   const params = useParams();
-  console.log(params);
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
+
+  const goBack = () => {
+    navigate(location.state.from, { replace: true });
+  };
 
   const onBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
-      // onClose();
+      goBack();
     }
   };
 
@@ -27,7 +33,7 @@ export default function Modal() {
 
     const onEscPressed = (event) => {
       if (event.code === "Escape") {
-        // onClose();
+        goBack();
       }
     };
     document.addEventListener("keydown", onEscPressed);
