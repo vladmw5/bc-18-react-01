@@ -35,7 +35,7 @@ class App extends Component {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="pokemon" element={<Pokemon />}>
-            <Route path=":pokemonName" element={<Modal />} />
+            <Route path="modal" element={<Modal />} />
           </Route>
 
           <Route path="*" element={<h1>Page not found</h1>} />

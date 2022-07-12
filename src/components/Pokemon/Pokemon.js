@@ -26,7 +26,10 @@ export default function Pokemon() {
       <ul>
         {pokemons.map(({ name }) => (
           <li key={name} id={name}>
-            <Link to={`/pokemon/${name}`} state={{ from: location.pathname }}>
+            <Link
+              to={`/pokemon/modal?name=${name}`}
+              state={{ from: location.pathname }}
+            >
               <h2>{name}</h2>
             </Link>
 

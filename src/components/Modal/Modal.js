@@ -1,4 +1,10 @@
-import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 
@@ -11,10 +17,13 @@ export default function Modal() {
   const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const pokemonName = searchParams.get("name");
+  console.log(pokemonName);
 
   const goBack = () => {
-    navigate(location.state.from, { replace: true });
+    navigate(location?.state?.from || "/pokemon", { replace: true });
   };
 
   const onBackdropClick = (event) => {
@@ -24,7 +33,7 @@ export default function Modal() {
   };
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${params.pokemonName}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
       .then((res) => res.json())
       .then((res) => {
         setPhoto(res.sprites.front_default);
