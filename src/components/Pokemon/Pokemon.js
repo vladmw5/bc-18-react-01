@@ -1,18 +1,22 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import Modal from "../Modal/Modal";
+import operations from "../../redux/operations";
 
 export default function Pokemon() {
-  const [pokemons, setPokemons] = useState([]);
+  const pokemons = useSelector((state) => state.pokemons.pokemons);
   const [photo, setPhoto] = useState("");
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon")
-      .then((res) => res.json())
-      .then((res) => setPokemons(res.results));
-  }, []);
+    console.log("here");
+    dispatch(operations.fetchPokemons());
+  }, [dispatch]);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -42,45 +46,3 @@ export default function Pokemon() {
     </div>
   );
 }
-
-// class Pokemon extends Component {
-//   state = {
-//     pokemons: [],
-//     photo: "",
-//   };
-
-//   componentDidMount() {
-//     fetch("https://pokeapi.co/api/v2/pokemon")
-//       .then((res) => res.json())
-//       .then((res) => this.setState({ pokemons: res.results }));
-//   }
-//   handleClick = ({ currentTarget: { id } }) => {
-//     console.log(id);
-//     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-//       .then((res) => res.json())
-//       .then((res) => this.setState({ photo: res.sprites.front_default }));
-//   };
-
-//   render() {
-//     console.log(this.state.photo);
-//     const { pokemons, photo } = this.state;
-//     return (
-//       <div>
-//         <ul>
-//           {pokemons.map(({ name, url }) => (
-//             <li key={name} id={name} onClick={this.handleClick}>
-//               <h2>{name}</h2>
-//               {/* <img src={this.state.photo} alt={name} width={40} /> */}
-//             </li>
-//           ))}
-//         </ul>
-//         {photo ? (
-//           <Modal>
-//             <img src={photo} alt="alt" width="140"/>
-//           </Modal>
-//         ) : null}
-//       </div>
-//     );
-//   }
-// }
-// export default Pokemon;
