@@ -7,13 +7,16 @@ import {
 } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import operations from "../../redux/operations";
 
 import s from "./Modal.module.css";
 
 const portalRef = document.querySelector("#modal-root");
 
 export default function Modal() {
-  const [photo, setPhoto] = useState("");
+  const photo = useSelector((state) => state.pokemons.pokemonImg);
+  const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,12 +36,7 @@ export default function Modal() {
   };
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setPhoto(res.sprites.front_default);
-        // toggleModal();
-      });
+    dispatch(operations.fetchOnePokemon(pokemonName));
 
     const onEscPressed = (event) => {
       if (event.code === "Escape") {
@@ -47,7 +45,7 @@ export default function Modal() {
     };
     document.addEventListener("keydown", onEscPressed);
     return () => document.removeEventListener("keydown", onEscPressed);
-  }, []);
+  }, [dispatch, goBack, pokemonName]);
 
   return createPortal(
     <div className={s.backdrop} onClick={onBackdropClick}>
