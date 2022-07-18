@@ -2,21 +2,24 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import { useGetAllPokemonsQuery } from "../../redux/pokemon/pokemonApi";
+
 import Modal from "../Modal/Modal";
 import operations from "../../redux/operations";
 
 export default function Pokemon() {
-  const pokemons = useSelector((state) => state.pokemons.pokemons);
+  const { data: pokemons } = useGetAllPokemonsQuery();
   const [photo, setPhoto] = useState("");
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();
 
-  const dispatch = useDispatch();
+  console.log(pokemons);
 
-  useEffect(() => {
-    console.log("here");
-    dispatch(operations.fetchPokemons());
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(operations.fetchPokemons());
+  // }, [dispatch]);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -28,7 +31,7 @@ export default function Pokemon() {
   return (
     <div>
       <ul>
-        {pokemons.map(({ name }) => (
+        {pokemons?.map(({ name }) => (
           <li key={name} id={name}>
             <Link
               to={`/pokemon/modal?name=${name}`}

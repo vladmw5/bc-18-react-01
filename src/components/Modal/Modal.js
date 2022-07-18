@@ -8,14 +8,16 @@ import {
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import operations from "../../redux/operations";
+import {
+  useLazyGetPokemonByNameQuery,
+  useGetPokemonByNameQuery,
+} from "../../redux/pokemon/pokemonApi";
 
 import s from "./Modal.module.css";
 
 const portalRef = document.querySelector("#modal-root");
 
 export default function Modal() {
-  const photo = useSelector((state) => state.pokemons.pokemonImg);
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
@@ -23,7 +25,12 @@ export default function Modal() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const pokemonName = searchParams.get("name");
-  console.log(pokemonName);
+
+  // const [fetchPokemon, { data: photo }] = useLazyGetPokemonByNameQuery();
+  const { data: photo, refetch } = useGetPokemonByNameQuery(pokemonName, {
+    skip: !pokemonName,
+  });
+  console.log(photo);
 
   const goBack = () => {
     navigate(location?.state?.from || "/pokemon", { replace: true });
@@ -36,8 +43,6 @@ export default function Modal() {
   };
 
   useEffect(() => {
-    dispatch(operations.fetchOnePokemon(pokemonName));
-
     const onEscPressed = (event) => {
       if (event.code === "Escape") {
         goBack();
@@ -45,7 +50,11 @@ export default function Modal() {
     };
     document.addEventListener("keydown", onEscPressed);
     return () => document.removeEventListener("keydown", onEscPressed);
-  }, [dispatch, goBack, pokemonName]);
+  }, [dispatch, goBack]);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch, pokemonName]);
 
   return createPortal(
     <div className={s.backdrop} onClick={onBackdropClick}>
