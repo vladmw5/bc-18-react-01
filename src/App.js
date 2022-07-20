@@ -11,6 +11,7 @@ import { Component } from "react";
 import Pokemon from "./components/Pokemon/Pokemon";
 import Home from "./components/Home";
 import Modal from "./components/Modal/Modal";
+import Login from "./components/Login/Login";
 
 class App extends Component {
   state = {
@@ -30,10 +31,12 @@ class App extends Component {
         <nav>
           <StyledLink to="/">Home</StyledLink>
           <StyledLink to="pokemon">Pokemon</StyledLink>
+          <StyledLink to="auth">Login</StyledLink>
         </nav>
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="auth" element={<Login />} />
           <Route path="pokemon" element={<Pokemon />}>
             <Route path="modal" element={<Modal />} />
           </Route>
